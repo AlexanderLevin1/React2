@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import axios from 'axios';
 import AllAlbums from './AllAlbums';
 import SingleAlbum from './SingleAlbum';
 import Sidebar from './Sidebar';
 import Player from './Player';
 
+
 export default class Main extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       albums: [],
@@ -17,7 +19,7 @@ export default class Main extends Component {
     this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     axios.get('/api/albums/')
       .then(res => res.data)
       .then(albums => {
@@ -25,7 +27,7 @@ export default class Main extends Component {
       });
   }
 
-  selectAlbum (albumId) {
+  selectAlbum(albumId) {
     axios.get(`/api/albums/${albumId}`)
       .then(res => res.data)
       .then(album => this.setState({
@@ -33,25 +35,39 @@ export default class Main extends Component {
       }));
   }
 
-  deselectAlbum () {
-    this.setState({ selectedAlbum: {}});
+  deselectAlbum() {
+    this.setState({ selectedAlbum: {} });
   }
 
-  render () {
+  render() {
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
           <Sidebar deselectAlbum={this.deselectAlbum} />
         </div>
         <div className="col-xs-10">
-        {
-          this.state.selectedAlbum.id ?
-          <SingleAlbum album={this.state.selectedAlbum} /> :
-          <AllAlbums albums={this.state.albums} selectAlbum={this.selectAlbum} />
-        }
+          {
+            this.props.children ?
+              React.cloneElement(this.props.children, {
+
+                // Album (singular) component's props
+                album: this.state.selectedAlbum,
+                currentSong: this.state.currentSong,
+                isPlaying: this.state.isPlaying,
+                toggle: this.toggleOne,
+
+                // Albums (plural) component's props
+                albums: this.state.albums,
+                selectAlbum: this.selectAlbum // note that this.selectAlbum is a method, and this.state.selectedAlbum is the chosen album
+              })
+              : null
+          }
         </div>
         <Player />
       </div>
     );
   }
 }
+
+
+
