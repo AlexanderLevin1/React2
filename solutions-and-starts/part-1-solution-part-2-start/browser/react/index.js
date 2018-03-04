@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Main from './components/Main';
 import AllAlbums from './components/AllAlbums';
+import SingleAlbum from './components/SingleAlbum';
 import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 // import BillMurray from './components/BillMurray';
 
@@ -11,6 +12,7 @@ ReactDOM.render(
     <Route path="/" component={Main} >
       <IndexRedirect to="/albums" />
       <Route path='/albums' component={AllAlbums} />
+      <Route path="/albums/:albumId" component={SingleAlbum} />
     </Route>
   </Router>,
   document.getElementById('app')

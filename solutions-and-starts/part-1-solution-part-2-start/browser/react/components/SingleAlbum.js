@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 import Songs from '../components/Songs';
 
 export default class SingleAlbum extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedAlbum: {}
+    };
+  }
+
+  componentDidMount () {
+    const albumId = this.props.routeParams.albumId;
+    const selectAlbum = this.props.selectAlbum;
+  
+    selectAlbum(albumId);
+  }
 
   render () {
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router';
 import axios from 'axios';
 import AllAlbums from './AllAlbums';
 import SingleAlbum from './SingleAlbum';
@@ -16,7 +17,7 @@ export default class Main extends Component {
       selectedAlbum: {}
     };
     this.selectAlbum = this.selectAlbum.bind(this);
-    this.deselectAlbum = this.deselectAlbum.bind(this);
+    // this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
   componentDidMount() {
@@ -35,9 +36,9 @@ export default class Main extends Component {
       }));
   }
 
-  deselectAlbum() {
-    this.setState({ selectedAlbum: {} });
-  }
+  // deselectAlbum() {
+  //   this.setState({ selectedAlbum: {} });
+  // }
 
   render() {
     return (
@@ -62,6 +63,7 @@ export default class Main extends Component {
               })
               : null
           }
+          
         </div>
         <Player />
       </div>
